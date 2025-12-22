@@ -1,0 +1,410 @@
+.body {
+  font-family: "Roboto", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.opening {
+  display: flex;
+  align-items: center;
+  margin-top: 160px;
+  flex-direction: column;
+  opacity: 0; 
+  animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#opening-title {
+  font-size: 80px;
+  color: #F9F9F9;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0;
+}
+
+#opening-tips {
+  font-size: 18px;
+  color: #F9F9F9;
+  font-weight: 400;
+  display: block;
+  margin-top: -6px;
+}
+
+#background-picture {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100vw; 
+  height: auto; 
+  object-fit: cover; 
+  z-index: -1;
+}
+
+button {
+  height: auto;
+  width: auto;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#drift-bottle-button-1, #drift-bottle-button-2, #drift-bottle-button-3{
+  position: absolute;
+  border: none;
+  background: none;
+  transform: 
+  scaleX(-1) rotate(45deg);
+  border-radius: 50%;
+  
+}
+
+#drift-bottle-image-1 {
+  height: 60px;
+  width: auto;
+}
+
+#drift-bottle-image-2 {
+  height: 70px;
+  width: auto;
+}
+
+#drift-bottle-image-3 {
+  height: 80px;
+  width: auto;
+}
+
+#drift-bottle-1, #drift-bottle-2, #drift-bottle-3 {
+  position: relative;
+}
+
+#drift-bottle-1 {
+ height: 100px;
+ width: 600px;
+ margin-top: 66px;
+ margin-left: 300px;
+}
+
+#drift-bottle-2 {
+ height: 100px;
+ width: 700px;
+ margin-top: 20px;
+ margin-left: 550px;
+}
+
+#drift-bottle-3 {
+ height: 100px;
+ width: 700px;
+ margin-top: 20px;
+ margin-left: 600px;
+}
+
+#create-drift-bottle-button, #check-response-button{
+  border: none;
+  background: none;
+  border-radius: 50%;
+}
+
+#create-drift-bottle-image {
+  height: 120px;
+  width: auto;
+}
+
+#create-drift-bottle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+#check-response {
+  position: fixed;
+  top: 10px;
+  right: 30px;
+}
+
+#meteor-image {
+  height: 120px;
+  width: auto;
+}
+
+#check-response-button {
+  transform: 
+  scaleX(-1) rotate(-25deg);
+}
+
+#parchment {
+  position: relative;
+  height: 700px;
+  width: auto;  
+}
+
+#create-parchment {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#parchment-image {
+  height: 100%;
+  width: auto;
+}
+
+.parchment-pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#title-input {
+  margin: 40px 40px 0 35px;
+  width: auto;
+  height: 60px;
+}
+
+#title {
+  width: 340px;
+}
+
+#text-input {
+  margin: 0px 40px 0px 35px;
+  height: 350px;
+  width: auto;
+}
+
+#text-area {
+  width: 100%;
+  height: 100%;
+}
+
+#details-input {
+  margin: 0px 40px 0px 35px;
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#continue, #decision-buttons {
+  margin: 0px 35px 40px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nickname {
+  width: 120px;
+}
+
+#cancel-button {
+  position: absolute;
+  padding: 2px 2px 0 2px;
+  right: 0;
+  top: 0;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  z-index: 100;
+}
+
+#cancel-icon {
+  height: 35px;
+  width: auto;
+}
+
+/* GPT */
+
+.parchment-button {
+  --paper-light: #f6e7c2;   /* 纸面浅色 */
+  --paper-mid:   #e9d5a2;   /* 纸面中间色 */
+  --paper-deep:  #d7bd86;   /* 边缘加深 */
+  --edge:        #a2773d;   /* 边框颜色 */
+  --ink:         #4a3318;   /* 文字“墨水”色 */
+
+  appearance: none;
+  border: 2px solid var(--edge);
+  padding: 12px 24px;
+  border-radius: 18px;
+  font: 600 16px/1.1 system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    /* 轻微纸张纹理（条纹） */
+    repeating-linear-gradient( 8deg, #0000 0 6px, #00000010 6px 7px ),
+    /* 边缘加深的“烘焙感” */
+    radial-gradient(120% 180% at 50% 0%, #0000 60%, #00000010 100%),
+    /* 纸面主色过渡 */
+    radial-gradient(140% 160% at 50% 120%, var(--paper-deep), var(--paper-mid) 40%, var(--paper-light) 100%);
+  box-shadow:
+    0 4px 0 0 #8b642f,            /* 下沿硬阴影，像厚纸 */
+    0 12px 18px -6px #00000040,   /* 投影 */
+    inset 0 3px 6px #ffffff66,    /* 内高光 */
+    inset 0 -4px 8px #00000014;   /* 内暗角 */
+  text-shadow: 0 1px 0 #fff8;
+  cursor: pointer;
+  position: relative;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+/* 不规则外形：用滤镜 + 轻微波浪边缘 */
+.parchment-button::before,
+.parchment-button::after {
+  content: "";
+  position: absolute;
+  left: 10px; right: 10px;
+  height: 8px;
+  border-radius: 50%;
+  filter: blur(6px);
+  z-index: -1;
+}
+.parchment-button::before { bottom: -6px; background: #00000030; } /* 投影晕 */
+.parchment-button::after  { top: -6px;  background: #ffffff60; }  /* 顶部泛白 */
+
+.parchment-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 0 0 #7b592a,
+    0 16px 22px -6px #00000045,
+    inset 0 3px 7px #ffffff80,
+    inset 0 -5px 10px #00000018;
+  filter: saturate(1.05);
+}
+
+.parchment-button:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 2px 0 0 #6f4f22,
+    0 8px 14px -6px #00000055,
+    inset 0 2px 4px #ffffff70,
+    inset 0 -3px 7px #00000020;
+}
+
+.parchment-button:focus-visible {
+  outline: 3px dashed #8b642f;
+  outline-offset: 4px;
+}
+
+/* 禁用态 */
+.parchment-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.25) brightness(0.95);
+  opacity: 0.8;
+  box-shadow:
+    0 3px 0 0 #927242,
+    0 10px 16px -6px #00000035,
+    inset 0 3px 6px #ffffff66,
+    inset 0 -4px 8px #00000014;
+}
+
+/* 公共基础 */
+#text-input, 
+#details-input,
+#title-input,
+#content-preview {
+  background: #f6e7c2;
+  background: radial-gradient(140% 160% at 50% 120%, #d7bd86, #e9d5a2 40%, #f6e7c2 100%);
+  border: 2px solid #a2773d;
+  border-radius: 18px;
+  box-shadow:
+    0 4px 0 0 #8b642f,
+    0 8px 12px -4px rgba(0, 0, 0, 0.35),
+    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 文本域 textarea */
+#text-area {
+  resize: none; /* 禁止调整大小 */
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: "Roboto", "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: #4a3318;
+  background: none; /* 背景透出羊皮纸 */
+  line-height: 1.4;
+  padding: 16px 16px 16px 16px;
+  font-weight: 400;
+}
+
+/* label 统一样式 */
+#info-input label {
+  margin-left: 20px;
+  font-weight: 600;
+  color: #4a3318;
+  margin-right: 6px;
+  font-size: 16px;
+  text-shadow: 0 1px 0 #fff8;
+}
+
+/* 输入框、下拉框 */
+#info-input input,
+#info-input select,
+#content-preview {
+  border: 2px solid #a2773d;
+  margin-left: 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #4a3318;
+  background: #f6e7c2;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+/* 聚焦时 */
+#info-input input:focus,
+#info-input select:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #d7bd86,
+    inset 0 2px 5px rgba(255, 255, 255, 0.8),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* 内部输入块的布局 */
+#nickname-input,
+#country-input{
+  margin-bottom: 12px;
+}
+
+#content-preview {
+  margin: 40px 35px 0 35px;
+  height: 550px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+}
+
+#revise-button {
+  margin-right: 60px;
+}
+
+#title-preview, #text-preview, #details-preview {
+  margin: 16px 16px 16px 16px;
+}

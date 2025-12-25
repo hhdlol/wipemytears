@@ -29,7 +29,12 @@
 }
 
 @layer utilities {
-  
+  .parchment-label {
+    @apply font-bold text-[#4a3318] text-lg ml-2 mb-2;
+  }
+  .input-area {
+    @apply bg-[#f6e7c2] bg-[radial-gradient(140%_160%_at_50%_120%,#d7bd86,#e9d5a2_40%,#f6e7c2_100%)] border-2 border-[#a2773d] rounded-2xl px-4 py-2 font-semibold;
+  }
 }
 
 body {
@@ -56,99 +61,12 @@ body {
 button {
   height: auto;
   width: auto;
+  background: none;
+  border: none;
 }
 
 button:hover {
   cursor: pointer;
-}
-
-#parchment {
-  position: relative;
-  height: 700px;
-  width: auto;  
-}
-
-#create-parchment {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-#parchment-image {
-  height: 100%;
-  width: auto;
-}
-
-.parchment-pages {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-
-#title-input {
-  margin: 40px 40px 0 35px;
-  width: auto;
-  height: 60px;
-}
-
-#title {
-  width: 340px;
-}
-
-#text-input {
-  margin: 0px 40px 0px 35px;
-  height: 350px;
-  width: auto;
-}
-
-#text-area {
-  width: 100%;
-  height: 100%;
-}
-
-#details-input {
-  margin: 0px 40px 0px 35px;
-  padding-top: 8px;
-  display: flex;
-  justify-content: space-between;
-}
-
-#continue, #decision-buttons {
-  margin: 0px 35px 40px 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#nickname {
-  width: 120px;
-}
-
-#cancel-button {
-  position: absolute;
-  padding: 2px 2px 0 2px;
-  right: 0;
-  top: 0;
-  border-radius: 50%;
-  background: none;
-  border: none;
-  z-index: 100;
-}
-
-#cancel-icon {
-  height: 35px;
-  width: auto;
 }
 
 /* GPT */
@@ -164,7 +82,7 @@ button:hover {
   border: 2px solid var(--edge);
   padding: 12px 24px;
   border-radius: 18px;
-  font: 600 16px/1.1 system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 600 24px/1.1 system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
   color: var(--ink);
   background:
     /* 轻微纸张纹理（条纹） */
@@ -232,96 +150,4 @@ button:hover {
     0 10px 16px -6px #00000035,
     inset 0 3px 6px #ffffff66,
     inset 0 -4px 8px #00000014;
-}
-
-/* 公共基础 */
-#text-input, 
-#details-input,
-#title-input,
-#content-preview {
-  background: #f6e7c2;
-  background: radial-gradient(140% 160% at 50% 120%, #d7bd86, #e9d5a2 40%, #f6e7c2 100%);
-  border: 2px solid #a2773d;
-  border-radius: 18px;
-  box-shadow:
-    0 4px 0 0 #8b642f,
-    0 8px 12px -4px rgba(0, 0, 0, 0.35),
-    inset 0 2px 5px rgba(255, 255, 255, 0.5),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* 文本域 textarea */
-#text-area {
-  resize: none; /* 禁止调整大小 */
-  border: none;
-  outline: none;
-  font-size: 16px;
-  font-family: "Roboto", "Microsoft YaHei", "PingFang SC", sans-serif;
-  color: #4a3318;
-  background: none; /* 背景透出羊皮纸 */
-  line-height: 1.4;
-  padding: 16px 16px 16px 16px;
-  font-weight: 400;
-}
-
-/* label 统一样式 */
-#info-input label {
-  margin-left: 20px;
-  font-weight: 600;
-  color: #4a3318;
-  margin-right: 6px;
-  font-size: 16px;
-  text-shadow: 0 1px 0 #fff8;
-}
-
-/* 输入框、下拉框 */
-#info-input input,
-#info-input select,
-#content-preview {
-  border: 2px solid #a2773d;
-  margin-left: 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-family: inherit;
-  color: #4a3318;
-  background: #f6e7c2;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-/* 聚焦时 */
-#info-input input:focus,
-#info-input select:focus {
-  outline: none;
-  box-shadow:
-    0 0 0 2px #d7bd86,
-    inset 0 2px 5px rgba(255, 255, 255, 0.8),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
-}
-
-/* 内部输入块的布局 */
-#nickname-input,
-#country-input{
-  margin-bottom: 12px;
-}
-
-#content-preview {
-  margin: 40px 35px 0 35px;
-  height: 550px;
-  width: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: space-between;
-}
-
-#revise-button {
-  margin-right: 60px;
-}
-
-#title-preview, #text-preview, #details-preview {
-  margin: 16px 16px 16px 16px;
 }

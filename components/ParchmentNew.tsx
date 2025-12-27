@@ -1,9 +1,16 @@
 "use client"
 
-import React, { useActionState , useEffect, useState} from 'react'
+import { useActionState , useEffect, useState} from 'react'
 import Image from 'next/image'
 import {useRouter} from "next/navigation"
-import { formSchema } from '@/app/lib/formValidation'
+import handelFormSubmit from '@/app/lib/handleFormSubmit';
+
+type State = {
+  error?: string;
+  success?: boolean;
+}
+
+const initialState : State = { };
 
 const ParchmentNew = () => {
   const [stage, setStage] = useState("edit")
@@ -14,33 +21,6 @@ const ParchmentNew = () => {
   const [content, setContent] = useState("")
   const [nickname, setNickname] = useState("")
   const [country, setCountry] = useState("")
-
-  type State = {
-    error?: string;
-    success?: boolean;
-  }
-
-  const initialState : State = { };
-
-  const handelFormSubmit = async (prevState: State, formData: FormData): Promise<State> => {
-    const formValues = {
-      title: formData.get("title") as string,
-      content: formData.get("content") as string,
-      nickname: formData.get("nickname") as string,
-      country: formData.get("country") as string,
-    };
-
-    const result = await formSchema.safeParseAsync(formValues);
-
-    if (!result.success) {
-      return {
-        ...prevState,
-        error: "验证失败，请检查输入内容",
-        success: false,
-      };
-    }
-    return { success: true };
-  }
   
   const [state, formAction, isPending] = useActionState<State, FormData>(handelFormSubmit, initialState);
 
@@ -51,19 +31,18 @@ const ParchmentNew = () => {
       setMessage(state.error);
     } else if (state.success) {
       setMessage("提交成功！");
-      setTimeout(() => router.back(), 1500);
-    } else {
-      setMessage("未知错误，请稍后重试");
+      const t1 = setTimeout(() => router.back(), 1500);
+      return () => clearTimeout(t1);
     }
 
     if (state.error || state.success) {
-      const timer = setTimeout(() => {
+      const t2 = setTimeout(() => {
         setMessage("");
       }, 3000);
       
-      return () => clearTimeout(timer);
+      return () => clearTimeout(t2);
     }
-  }, [state, router]);
+  }, [state.error, state.success, router]);
 
   return (
     <form action={formAction} className='relative flex h-[900] w-[600] align-middle justify-center' >
@@ -76,7 +55,7 @@ const ParchmentNew = () => {
           <>
             <div className='flex flex-col'>
               <label htmlFor="title" className='parchment-label'>主题:（选填）</label>
-              <input type="text" id="title" name="title" placeholder='请输入标题' required className='w-full h-10 input-area' onChange={(e) => {setTitle(e.target.value)}} value={title || ""}/>
+              <input type="text" id="title" name="title" placeholder='请输入标题' className='w-full h-10 input-area' onChange={(e) => {setTitle(e.target.value)}} value={title || ""}/>
             </div>
             <div className='flex flex-col'>
               <label htmlFor="content" className='parchment-label'>内容:</label>
@@ -108,7 +87,7 @@ const ParchmentNew = () => {
             <input type="hidden" name="nickname" value={nickname} />
             <input type="hidden" name="country" value={country} />
             <div className='flex flex-col justify-between'>
-              <div>{title || "(无标题)"}</div>
+              <div className=''>{title || "(无标题)"}</div>
               <div>{content}</div>
               <div>{nickname} - {country}</div>
             </div>

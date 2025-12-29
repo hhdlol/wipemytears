@@ -26,10 +26,12 @@ model Post {
 
 model User {
   id        String    @id @default(cuid())
-  nickname  String
+  username  String    @unique
   posts     Post[] 
   comments  Comment[]
+  sessions  Session[]
   createdAt DateTime  @default(now())
+  passwordHash String
 }
 
 model Comment {
@@ -40,4 +42,15 @@ model Comment {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([userId])
+  @@index([expiresAt])
 }

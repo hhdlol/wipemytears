@@ -5,6 +5,7 @@ import React from 'react'
 import DriftBottles from './DriftBottles'
 import CreateBottleBtn from './CreateBottleBtn'
 import InboxBtn from './InboxBtn'
+import LoginBtn from './LoginBtn'
 
 const BeachScene = () => {
   return (

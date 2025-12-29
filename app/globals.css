@@ -28,23 +28,132 @@
   }
 }
 
-@layer utilities {
-  .parchment-label {
-    @apply font-bold text-[#4a3318] text-lg ml-2 mb-2;
+@layer base {
+  body {
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    margin: 0;
+    padding: 0;
   }
-  .input-area {
-    @apply bg-[#f6e7c2] bg-[radial-gradient(140%_160%_at_50%_120%,#d7bd86,#e9d5a2_40%,#f6e7c2_100%)] border-2 border-[#a2773d] rounded-2xl px-4 py-2 font-semibold;
+
+  button {
+    height: auto;
+    width: auto;
+  }
+
+  button:hover {
+    cursor: pointer;
   }
 }
 
-body {
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-  margin: 0;
-  padding: 0;
+
+@layer components {
+  /* GPT */
+
+  .parchment-button {
+    --paper-light: #f6e7c2;   /* 纸面浅色 */
+    --paper-mid:   #e9d5a2;   /* 纸面中间色 */
+    --paper-deep:  #d7bd86;   /* 边缘加深 */
+    --edge:        #a2773d;   /* 边框颜色 */
+    --ink:         #4a3318;   /* 文字“墨水”色 */
+
+    appearance: none;
+    border: 2px solid var(--edge);
+    padding: 12px 24px;
+    border-radius: 18px;
+    font: 600 24px/1.1 
+    system-ui,
+    -apple-system,
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Noto Sans CJK SC",
+    sans-serif;;
+    color: var(--ink);
+    background:
+      /* 轻微纸张纹理（条纹） */
+      repeating-linear-gradient( 8deg, #0000 0 6px, #00000010 6px 7px ),
+      /* 边缘加深的“烘焙感” */
+      radial-gradient(120% 180% at 50% 0%, #0000 60%, #00000010 100%),
+      /* 纸面主色过渡 */
+      radial-gradient(140% 160% at 50% 120%, var(--paper-deep), var(--paper-mid) 40%, var(--paper-light) 100%);
+    box-shadow:
+      0 4px 0 0 #8b642f,            /* 下沿硬阴影，像厚纸 */
+      0 12px 18px -6px #00000040,   /* 投影 */
+      inset 0 3px 6px #ffffff66,    /* 内高光 */
+      inset 0 -4px 8px #00000014;   /* 内暗角 */
+    text-shadow: 0 1px 0 #fff8;
+    cursor: pointer;
+    position: relative;
+    transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+  }
+
+  /* 不规则外形：用滤镜 + 轻微波浪边缘 */
+  .parchment-button::before,
+  .parchment-button::after {
+    content: "";
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 8px;
+    border-radius: 50%;
+    filter: blur(6px);
+    z-index: -1;
+  }
+  .parchment-button::before { bottom: -6px; background: #00000030; } /* 投影晕 */
+  .parchment-button::after  { top: -6px;  background: #ffffff60; }  /* 顶部泛白 */
+
+  .parchment-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 0 0 #7b592a,
+      0 16px 22px -6px #00000045,
+      inset 0 3px 7px #ffffff80,
+      inset 0 -5px 10px #00000018;
+    filter: saturate(1.05);
+  }
+
+  .parchment-button:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 2px 0 0 #6f4f22,
+      0 8px 14px -6px #00000055,
+      inset 0 2px 4px #ffffff70,
+      inset 0 -3px 7px #00000020;
+  }
+
+  .parchment-button:focus-visible {
+    outline: 3px dashed #8b642f;
+    outline-offset: 4px;
+  }
+
+  /* 禁用态 */
+  .parchment-button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.25) brightness(0.95);
+    opacity: 0.8;
+    box-shadow:
+      0 3px 0 0 #927242,
+      0 10px 16px -6px #00000035,
+      inset 0 3px 6px #ffffff66,
+      inset 0 -4px 8px #00000014;
+  }
+
+  .parchment-label {
+    font-weight: 700;
+    color: #4a3318;
+    font-size: 18px;
+    margin-left: 8px;
+    margin-bottom: 8px;
+  }
+
+}
+
+@layer utilities {
+  .input-area {
+    @apply bg-[#f6e7c2] bg-[radial-gradient(140%_160%_at_50%_120%,#d7bd86,#e9d5a2_40%,#f6e7c2_100%)] border-2 border-[#a2773d] rounded-2xl px-4 py-2 font-semibold;
+  }
 }
 
 @keyframes fadeIn {
@@ -56,98 +165,4 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-button {
-  height: auto;
-  width: auto;
-  background: none;
-  border: none;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-/* GPT */
-
-.parchment-button {
-  --paper-light: #f6e7c2;   /* 纸面浅色 */
-  --paper-mid:   #e9d5a2;   /* 纸面中间色 */
-  --paper-deep:  #d7bd86;   /* 边缘加深 */
-  --edge:        #a2773d;   /* 边框颜色 */
-  --ink:         #4a3318;   /* 文字“墨水”色 */
-
-  appearance: none;
-  border: 2px solid var(--edge);
-  padding: 12px 24px;
-  border-radius: 18px;
-  font: 600 24px/1.1 system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: var(--ink);
-  background:
-    /* 轻微纸张纹理（条纹） */
-    repeating-linear-gradient( 8deg, #0000 0 6px, #00000010 6px 7px ),
-    /* 边缘加深的“烘焙感” */
-    radial-gradient(120% 180% at 50% 0%, #0000 60%, #00000010 100%),
-    /* 纸面主色过渡 */
-    radial-gradient(140% 160% at 50% 120%, var(--paper-deep), var(--paper-mid) 40%, var(--paper-light) 100%);
-  box-shadow:
-    0 4px 0 0 #8b642f,            /* 下沿硬阴影，像厚纸 */
-    0 12px 18px -6px #00000040,   /* 投影 */
-    inset 0 3px 6px #ffffff66,    /* 内高光 */
-    inset 0 -4px 8px #00000014;   /* 内暗角 */
-  text-shadow: 0 1px 0 #fff8;
-  cursor: pointer;
-  position: relative;
-  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
-}
-
-/* 不规则外形：用滤镜 + 轻微波浪边缘 */
-.parchment-button::before,
-.parchment-button::after {
-  content: "";
-  position: absolute;
-  left: 10px; right: 10px;
-  height: 8px;
-  border-radius: 50%;
-  filter: blur(6px);
-  z-index: -1;
-}
-.parchment-button::before { bottom: -6px; background: #00000030; } /* 投影晕 */
-.parchment-button::after  { top: -6px;  background: #ffffff60; }  /* 顶部泛白 */
-
-.parchment-button:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 0 0 #7b592a,
-    0 16px 22px -6px #00000045,
-    inset 0 3px 7px #ffffff80,
-    inset 0 -5px 10px #00000018;
-  filter: saturate(1.05);
-}
-
-.parchment-button:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 2px 0 0 #6f4f22,
-    0 8px 14px -6px #00000055,
-    inset 0 2px 4px #ffffff70,
-    inset 0 -3px 7px #00000020;
-}
-
-.parchment-button:focus-visible {
-  outline: 3px dashed #8b642f;
-  outline-offset: 4px;
-}
-
-/* 禁用态 */
-.parchment-button:disabled {
-  cursor: not-allowed;
-  filter: grayscale(0.25) brightness(0.95);
-  opacity: 0.8;
-  box-shadow:
-    0 3px 0 0 #927242,
-    0 10px 16px -6px #00000035,
-    inset 0 3px 6px #ffffff66,
-    inset 0 -4px 8px #00000014;
 }

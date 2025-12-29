@@ -3,7 +3,7 @@
 import { useActionState , useEffect, useState} from 'react'
 import Image from 'next/image'
 import {useRouter} from "next/navigation"
-import handelFormSubmit from '@/app/lib/handleFormSubmit';
+import handelPostSubmit from '@/app/lib/handlePostSubmit';
 
 type State = {
   error?: string;
@@ -22,7 +22,7 @@ const ParchmentNew = () => {
   const [nickname, setNickname] = useState("")
   const [country, setCountry] = useState("")
   
-  const [state, formAction, isPending] = useActionState<State, FormData>(handelFormSubmit, initialState);
+  const [state, formAction, isPending] = useActionState<State, FormData>(handelPostSubmit, initialState);
 
   const [message, setMessage] = useState("")
 
@@ -49,7 +49,7 @@ const ParchmentNew = () => {
       <button className='absolute top-3 right-2 z-10' type='button' onClick={() => router.back()}>
         <Image src="/cancel.png" alt="cancel-btn" width={35} height={35}/>
       </button>
-      <Image src='/parchment.png' alt='parchment' fill className='object-contain' />
+      <Image src='/parchment-y.png' alt='parchment' fill className='object-contain' />
       <div className='absolute flex flex-col justify-between h-full w-full p-16'>
         {stage === "edit" ? (
           <>

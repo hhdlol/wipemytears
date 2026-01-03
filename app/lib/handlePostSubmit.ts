@@ -2,6 +2,7 @@
 
 import { prisma } from '@/app/lib/prisma';
 import { postSchema } from '@/app/lib/formValidation';
+import { getUserFromSession } from '@/app/lib/auth';
 
 type State = {
   error?: string;
@@ -9,6 +10,12 @@ type State = {
 }
 
 const handelPostSubmit = async (prevState: State, formData: FormData): Promise<State> => {
+  const user = await getUserFromSession();
+
+  if (!user) {
+    return {error: "请先登录", success: false}
+  }
+  
   const formValues = {
     title: String(formData.get("title") ?? ""),
     content: String(formData.get("content") ?? ""),
@@ -31,8 +38,8 @@ const handelPostSubmit = async (prevState: State, formData: FormData): Promise<S
       title: formValues?.title || null,
       content: formValues.content,
       nickname: formValues.nickname,
-      country: formValues.country
-      // user info
+      country: formValues.country, 
+      authorId: user.id
     }
   });
 

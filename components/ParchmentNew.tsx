@@ -4,23 +4,29 @@ import { useActionState , useEffect, useState} from 'react'
 import Image from 'next/image'
 import {useRouter} from "next/navigation"
 import handelPostSubmit from '@/app/lib/handlePostSubmit';
+import { COUNTRIES, COUNTRY_MAP } from '@/app/lib/countries';
 
 type State = {
   error?: string;
   success?: boolean;
 }
 
+type Props = {
+  username?: string;
+  usercountry?: string | null;
+};
+
 const initialState : State = { };
 
-const ParchmentNew = () => {
+const ParchmentNew = ({ username, usercountry }: Props) => {
   const [stage, setStage] = useState("edit")
 
   const router = useRouter()
 
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
-  const [nickname, setNickname] = useState("")
-  const [country, setCountry] = useState("")
+  const [nickname, setNickname] = useState(() => username ?? "")
+  const [country, setCountry] = useState(() => usercountry ?? "")
   
   const [state, formAction, isPending] = useActionState<State, FormData>(handelPostSubmit, initialState);
 
@@ -71,7 +77,11 @@ const ParchmentNew = () => {
                 <label htmlFor="country" className='parchment-label'>国家/地区:</label>
                 <select id="country" name="country" required className='input-area' onChange={(e) => {setCountry(e.target.value)}} value={country || ""}>
                   <option value="">请选择国家/地区</option>
-                  <option value="中国">中国</option>
+                  {COUNTRIES.map(c => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -89,7 +99,7 @@ const ParchmentNew = () => {
             <div className='flex flex-col justify-between'>
               <div className=''>{title || "(无标题)"}</div>
               <div>{content}</div>
-              <div>{nickname} - {country}</div>
+              <div>{nickname} - {COUNTRY_MAP[country] || country}</div>
             </div>
             <div className='flex justify-around align-middle'>
               <button type='button' className='parchment-button' onClick={() => setStage("edit")}>修改</button>

@@ -27,6 +27,7 @@ model Post {
 model User {
   id        String    @id @default(cuid())
   username  String    @unique
+  country   String?
   posts     Post[] 
   comments  Comment[]
   sessions  Session[]

@@ -1,13 +1,15 @@
-"use client"
+"use server"
 
 import Image from 'next/image'
-import React from 'react'
 import DriftBottles from './DriftBottles'
 import CreateBottleBtn from './CreateBottleBtn'
 import InboxBtn from './InboxBtn'
 import LoginBtn from './LoginBtn'
+import { getUserFromSession } from '@/app/lib/auth'
 
-const BeachScene = () => {
+const BeachScene = async () => {
+  const user = await getUserFromSession();
+
   return (
     <>
       <Image src="/background.png" alt="background" fill className='-z-10 relative' priority />
@@ -19,9 +21,9 @@ const BeachScene = () => {
 
       <DriftBottles />
 
-      <CreateBottleBtn />
+      <CreateBottleBtn userId={user?.id}/>
 
-      <InboxBtn />
+      {user ? <InboxBtn />: <LoginBtn />}
     </>
   )
 }

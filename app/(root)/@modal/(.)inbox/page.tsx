@@ -1,10 +1,16 @@
+"use server"
+
+import { getUserFromSession } from "@/app/lib/auth";
 import Modal from "@/components/Modal";
 import ParchmentInbox from "@/components/ParchmentInbox";
 
-export default function InboxModalPage() {
+export default async function InboxModalPage() {
+
+  const user = await getUserFromSession();
+
   return (
     <Modal>
-      <ParchmentInbox />
+      <ParchmentInbox user={user}/>
     </Modal>
   );
 }

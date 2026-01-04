@@ -1,7 +1,7 @@
 import BeachScene from '@/components/BeachScene'
 import React from 'react'
 
-const SiteLayout = ({children, modal}: {children: React.ReactNode, modal: React.ReactNode}) => {
+const ModalLayout = ({children, modal}: {children: React.ReactNode, modal: React.ReactNode}) => {
   return (
     <main>
       <BeachScene />
@@ -11,4 +11,4 @@ const SiteLayout = ({children, modal}: {children: React.ReactNode, modal: React.
   )
 }
 
-export default SiteLayout
+export default ModalLayout

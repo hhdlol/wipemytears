@@ -3,7 +3,7 @@
 import { useActionState , useEffect, useState} from 'react'
 import Image from 'next/image'
 import {useRouter} from "next/navigation"
-import handelPostSubmit from '@/app/lib/handlePostSubmit';
+import handlePostSubmit from '@/app/lib/handlePostSubmit';
 import { COUNTRIES, COUNTRY_MAP } from '@/app/lib/countries';
 
 type State = {
@@ -28,7 +28,7 @@ const ParchmentNew = ({ username, usercountry }: Props) => {
   const [nickname, setNickname] = useState(() => username ?? "")
   const [country, setCountry] = useState(() => usercountry ?? "")
   
-  const [state, formAction, isPending] = useActionState<State, FormData>(handelPostSubmit, initialState);
+  const [state, formAction, isPending] = useActionState<State, FormData>(handlePostSubmit, initialState);
 
   const [message, setMessage] = useState("")
 
@@ -108,8 +108,7 @@ const ParchmentNew = ({ username, usercountry }: Props) => {
           </>
         )}
       </div>
-      {!state.success && <p className="text-red-500 z-20 mt-12 h-6 font-bold">{message}</p>}
-      {state.success && <p className="text-green-500 z-20 mt-12 h-6 font-bold">{message}</p>}
+      {(state.success || state.error) && (<p className = {`${state.success ? "text-green-500" : "text-red-500"} z-20 mt-12 h-6 font-bold`}>{message}</p>)}
     </form>
   )
 }

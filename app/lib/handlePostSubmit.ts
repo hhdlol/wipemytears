@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from '@/app/lib/prisma';
-import { postSchema } from '@/app/lib/formValidation';
+import { postSchema } from '@/app/lib/validations';
 import { getUserFromSession } from '@/app/lib/auth';
 
 type State = {
@@ -9,7 +9,7 @@ type State = {
   success?: boolean;
 }
 
-const handelPostSubmit = async (prevState: State, formData: FormData): Promise<State> => {
+const handlePostSubmit = async (prevState: State, formData: FormData): Promise<State> => {
   const user = await getUserFromSession();
 
   if (!user) {
@@ -46,4 +46,4 @@ const handelPostSubmit = async (prevState: State, formData: FormData): Promise<S
   return { success: true };
 }
 
-export default handelPostSubmit;
+export default handlePostSubmit;

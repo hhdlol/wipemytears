@@ -4,7 +4,7 @@ import { prisma } from "@/app/lib/prisma";
 import { Prisma } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import { createSession } from "@/app/lib/auth";
-import { userSchema } from '@/app/lib/formValidation';
+import { userSchema } from '@/app/lib/validations';
 
 type State = {
   error?: string;

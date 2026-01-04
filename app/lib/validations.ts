@@ -11,3 +11,7 @@ export const userSchema = z.object({
   username: z.string().trim().toLowerCase().min(3, "用户名至少需要3个字符").max(30, "用户名不能超过30个字符"),
   password: z.string().min(6, "密码至少需要6个字符").max(100, "密码不能超过100个字符"),
 });
+
+export const commentSchema = z.object({
+  comment: z.string().min(1, "内容不能为空").max(5000, "内容不能超过5000个字符"),
+})

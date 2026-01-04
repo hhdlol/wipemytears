@@ -43,13 +43,15 @@ const ParchmentInbox = () => {
   }, [activeState.error, activeState.success, router, mode]);
 
   return (
-    <form className='relative flex h-[600] w-[900] align-middle justify-center' >
+    <form className='relative flex h-[600] w-[900] align-middle justify-center flex-col'>
       <button className='absolute top-3 right-2 z-10' type='button' onClick={() => router.back()}>
         <Image src="/cancel.png" alt="cancel-btn" width={35} height={35}/>
       </button>
       <Image src='/parchment-x.png' alt='parchment' className='object-contain' fill/>
-      <div>
-        <button className="parchment-button" formAction={logoutAction} onClick={() => {setMode('logout')}}>{isPendingLogout ? "退出中..." : "退出登录"}</button>
+      <div className='absolute flex flex-col justify-between h-full w-full p-20'>
+        <div className='flex justify-center'>
+          <button className="parchment-button" formAction={logoutAction} onClick={() => {setMode('logout')}}>{isPendingLogout ? "退出中..." : "退出登录"}</button>
+        </div>
       </div>
       {(activeState.error || activeState.success) && (
         <p className={`${activeState.success ? "text-green-500" : "text-red-500"} z-20 mt-12 h-6 font-bold`}>{message}</p>

@@ -38,7 +38,7 @@ export default async function PostPage({
     <>
       <BeachScene />
       <Modal>
-        <ParchmentRead post={post} comments={comments} userId={user.id}/>
+        <ParchmentRead post={post} comments={comments} userId={user?.id}/>
       </Modal>
     </>
   )

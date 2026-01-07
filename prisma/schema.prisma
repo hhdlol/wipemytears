@@ -27,6 +27,7 @@ model Post {
 model User {
   id        String    @id @default(cuid())
   username  String    @unique
+  nickname  String?
   country   String?
   posts     Post[] 
   comments  Comment[]
@@ -38,11 +39,12 @@ model User {
 model Comment {
   id        String   @id @default(cuid())
   postId    String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   content   String
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
 }
 
 model Session {

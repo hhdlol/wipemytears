@@ -12,21 +12,21 @@ type State = {
 }
 
 type Props = {
-  username?: string;
-  usercountry?: string | null;
+  userNickname?: string | null;
+  userCountry?: string | null;
 };
 
 const initialState : State = { };
 
-const ParchmentNew = ({ username, usercountry }: Props) => {
+const ParchmentNew = ({ userNickname, userCountry }: Props) => {
   const [stage, setStage] = useState("edit")
 
   const router = useRouter()
 
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
-  const [nickname, setNickname] = useState(() => username ?? "")
-  const [country, setCountry] = useState(() => usercountry ?? "")
+  const [nickname, setNickname] = useState(() => userNickname ?? "")
+  const [country, setCountry] = useState(() => userCountry ?? "")
   
   const [state, formAction, isPending] = useActionState<State, FormData>(handlePostSubmit, initialState);
 
@@ -60,7 +60,7 @@ const ParchmentNew = ({ username, usercountry }: Props) => {
         {stage === "edit" ? (
           <>
             <div className='flex flex-col'>
-              <label htmlFor="title" className='parchment-label'>主题:（选填）</label>
+              <label htmlFor="title" className='parchment-label'>标题:（选填）</label>
               <input type="text" id="title" name="title" placeholder='请输入标题' className='w-full h-10 input-area' onChange={(e) => {setTitle(e.target.value)}} value={title || ""}/>
             </div>
             <div className='flex flex-col'>
@@ -96,19 +96,28 @@ const ParchmentNew = ({ username, usercountry }: Props) => {
             <input type="hidden" name="content" value={content} />
             <input type="hidden" name="nickname" value={nickname} />
             <input type="hidden" name="country" value={country} />
-            <div className='flex flex-col justify-between'>
-              <div className=''>{title || "(无标题)"}</div>
-              <div>{content}</div>
-              <div>{nickname} - {COUNTRY_MAP[country] || country}</div>
+            <div>
+              <article className='flex flex-col justify-between h-130 overflow-y-auto gap-4'>
+                <span className='text-[#4a3318] text-2xl font-bold'>{title || "(无标题)"}</span>
+                <p className='text-[#4a3318] text-base whitespace-pre-wrap wrap-break-word'>{content}</p>
+                <span className=" flex text-[#4a3318] text-lg font-bold justify-end">{nickname} - {COUNTRY_MAP[country] || country}</span>
+              </article>
             </div>
-            <div className='flex justify-around align-middle'>
-              <button type='button' className='parchment-button' onClick={() => setStage("edit")}>修改</button>
-              <button type='submit' className='parchment-button'>{isPending ? "提交中..." : "提交"}</button>
+            <div>
+              <div className="flex flex-col gap-2 input-area">
+                <div className="h-30 flex justify-center items-center">
+                  <span className="parchment-label m-0">暂无评论</span>
+                </div>
+              </div>
+              <div className='flex justify-around align-middle mt-8'>
+                <button type='button' className='parchment-button text-[#a2773d]' onClick={() => setStage("edit")}>修改</button>
+                <button type='submit' className='parchment-button'>{isPending ? "提交中..." : "提交"}</button>
+              </div>
             </div>
           </>
         )}
       </div>
-      {(state.success || state.error) && (<p className = {`${state.success ? "text-green-500" : "text-red-500"} z-20 mt-12 h-6 font-bold`}>{message}</p>)}
+      {(state.success || state.error) && (<p className = {`${state.success ? "text-green-500" : "text-red-500"} z-20 mt-16 h-6 font-bold`}>{message}</p>)}
     </form>
   )
 }

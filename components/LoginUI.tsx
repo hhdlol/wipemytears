@@ -19,6 +19,7 @@ const LoginUI = () => {
 
   const [mode, setMode] = useState<"login" | "register">("login");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loginState, loginAction, isPendingLogin] = useActionState<State, FormData>(handleLoginSubmit, initialState);
 
@@ -56,9 +57,10 @@ const LoginUI = () => {
           <label htmlFor="username" className='parchment-label text-3xl mr-6'>用户名:</label>
           <input type="text" id="username" name='username' className='input-area w-150' required/>
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between relative'>
           <label htmlFor="password" className='parchment-label text-3xl mr-6'>密码:</label>
-          <input type="password" id="password" name='password' className='input-area w-150' required/>
+          <input type={showPassword ? "text" : "password"} id="password" name='password' className='input-area w-150' required/>
+          <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-sm" onClick={() => setShowPassword(!showPassword)}>{showPassword ? '隐藏' : '显示'}</button>
         </div>
         <div className='flex justify-around'>
           <button type="submit" className='parchment-button text-[32px] text-[#a2773d]' formAction={registerAction} onClick={() => {setMode("register")}}>{isPendingRegister ? "注册中..." : "注册"}</button>
@@ -66,7 +68,7 @@ const LoginUI = () => {
         </div>
       </div>
       {(activeState.error || activeState.success) && (
-        <p className={`${activeState.success ? "text-green-500" : "text-red-500"} z-20 mt-12 h-6 font-bold`}>{message}</p>
+        <p className={`${activeState.success ? "text-green-500" : "text-red-500"} z-20 mt-16 h-6 font-bold`}>{message}</p>
       )}
     </form>
   )

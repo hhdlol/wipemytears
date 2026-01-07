@@ -10,7 +10,7 @@ export default async function NewModalPage() {
 
   return (
     <Modal>
-      <ParchmentNew username={user?.username} usercountry={user?.country}/>
+      <ParchmentNew userNickname={user?.nickname} userCountry={user?.country}/>
     </Modal>
   );
 }

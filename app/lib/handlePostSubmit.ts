@@ -35,10 +35,10 @@ const handlePostSubmit = async (prevState: State, formData: FormData): Promise<S
 
   await prisma.post.create({
     data: {
-      title: formValues?.title || null,
-      content: formValues.content,
-      nickname: formValues.nickname,
-      country: formValues.country, 
+      title: result.data?.title || null,
+      content: result.data.content,
+      nickname: result.data.nickname,
+      country: result.data.country, 
       authorId: user.id
     }
   });

@@ -1,14 +1,15 @@
 import { prisma } from "@/app/lib/prisma";
 import { notFound } from "next/navigation";
-import { COUNTRY_MAP } from '@/app/lib/countries';
-
+import ParchmentRead from "@/components/ParchmentRead";
+import Modal from "@/components/Modal";
+import BeachScene from "@/components/BeachScene";
+import { getUserFromSession } from "@/app/lib/auth";
 
 export default async function PostPage({
   params,
 }: {
   params: { id: string };
 }) {
-
   const { id } = await params;
   const post = await prisma.post.findUnique({
     where: { id: id },
@@ -19,18 +20,26 @@ export default async function PostPage({
       nickname: true,
       country: true,
       createdAt: true,
+      authorId: true
     },
   });
 
   if (!post) notFound();
 
+  const comments = await prisma.comment.findMany({
+    where: { postId : id },
+    orderBy: { createdAt: "desc" },
+    include: { author: { select: { username: true, country: true } } }
+  })
+
+  const user = await getUserFromSession();
+
   return (
-  <>
-    <div className='flex flex-col justify-between'>
-      <div className=''>{post?.title || "(无标题)"}</div>
-      <div>{post.content}</div>
-      <div>{post.nickname} - {COUNTRY_MAP[post.country] || post.country}</div>
-    </div>
-  </>
+    <>
+      <BeachScene />
+      <Modal>
+        <ParchmentRead post={post} comments={comments} userId={user.id}/>
+      </Modal>
+    </>
   )
 }

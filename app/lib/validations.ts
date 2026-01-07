@@ -15,3 +15,8 @@ export const userSchema = z.object({
 export const commentSchema = z.object({
   comment: z.string().min(1, "内容不能为空").max(5000, "内容不能超过5000个字符"),
 })
+
+export const modifySchema = z.object({
+  nickname: z.string().optional().or(z.literal("")),
+  country: z.string().optional().or(z.literal("")),
+})

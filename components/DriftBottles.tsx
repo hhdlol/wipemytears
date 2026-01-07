@@ -1,37 +1,18 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-const DriftBottles = () => {
+type Props = {
+  picks?: {id: string | null}[];
+}
+
+const DriftBottles = ({picks} : Props) => {
   const router = useRouter();
-
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const openRandomPost = async () => {
-    if (loading) return;
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/post/random", { method: "GET" });
-      const data = await res.json();
-
-      if (!res.ok) {
-        setMessage(data.error || "获取错误")
-        return;
-      }
-
-      router.push(`/post/${data.id}`);
-    } catch (err) {
-      alert(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const containers = [
+  const [positions, setPositions] = useState<{ top: string, left: string }[]>([]);
+    const containers = useMemo(() => [
     {
       id: 1,
       height: 100,
@@ -56,26 +37,50 @@ const DriftBottles = () => {
       ml: 700,
       imgh: 60,
     }
-  ];
+  ], [])
+
+  useEffect(() => {
+    if (message) {
+      const t = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(t);
+    }
+  }, [message])
+
+  useEffect(() => {
+    const randomPositions = containers.map(() => ({
+      top: `${Math.floor(Math.random() * 80)}%`,
+      left: `${Math.floor(Math.random() * 80)}%`
+    }));
+    setPositions(randomPositions);
+  }, [containers]);
 
   return (
     <>
 
-      {containers.map((container) => (
+      {containers.map((container, i) => (
 
-        <div key={container.id} className="relative" style={{
+        <div key={container.id} className='relative' style={{
           height: `${container.height}px`, 
           width: `${container.width}px`, 
           marginTop: `${container.mt}px`, 
           marginLeft: `${container.ml}px`,
           }}>
-          <button className="absolute border-none bg-transparent scale-x-[-1] -rotate-45" onClick={openRandomPost} disabled={loading}>
-            <Image src="/drift-bottle.png" alt={`drift-bottle-${container.id}`} height={container.imgh} width={container.imgh}/>
-          </button>
+          {positions[i] && (
+            <button className="absolute border-none bg-transparent scale-x-[-1] -rotate-45"
+            onClick={() => (picks && picks[i]) ? router.push(`post/${picks[i].id}`) : setMessage("暂无漂流瓶")} 
+            style={{
+                top: positions[i].top,
+                left: positions[i].left,
+            }}>
+              <Image src="/drift-bottle.png" alt={`drift-bottle-${container.id}`} height={container.imgh} width={container.imgh}/>
+            </button>)
+          }
         </div>
 
       ))}
-      {message && <p className={`text-red-500 z-20 mt-12 h-6 font-bold`}>{message}</p>}
+      {message && <div className='fixed top-36 w-full flex justify-center'><p className={`text-red-500 z-20 h-6 font-bold`}>{message}</p></div>}
     </>
   )
 }

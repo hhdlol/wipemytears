@@ -14,9 +14,9 @@ const BeachScene = async () => {
   const user = await getUserFromSession();
   const unreadCount = user ? await getUnreadCount(user.id) : 0;
 
-  const picks = await prisma.$queryRaw<{ id: string | null }[]>`
+  const picks = await prisma.$queryRaw<{ id: string }[]>`
     SELECT "id" FROM "Post"
-    ORDER BY random()
+    ORDER BY RANDOM()
     LIMIT 3;
   `;
 

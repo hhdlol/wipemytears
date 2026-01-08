@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import handleLoginSubmit from '@/app/lib/handleLoginSubmit';
@@ -16,6 +16,8 @@ const initialState : State = { };
 const LoginUI = () => {
 
   const router = useRouter()
+
+  const formRef = useRef<HTMLFormElement | null>(null)
 
   const [mode, setMode] = useState<"login" | "register">("login");
   const [message, setMessage] = useState("");
@@ -46,7 +48,7 @@ const LoginUI = () => {
   }, [activeState.error, activeState.success, router, mode]);
 
   return (
-    <form className='relative flex h-[600] w-[900] align-middle justify-center' >
+    <form className='relative flex h-[600] w-[900] align-middle justify-center' ref={formRef}>
       <button className='absolute top-3 right-2 z-10' type='button' onClick={() => router.back()}>
         <Image src="/cancel.png" alt="cancel-btn" width={35} height={35}/>
       </button>
@@ -63,7 +65,7 @@ const LoginUI = () => {
           <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-sm" onClick={() => setShowPassword(!showPassword)}>{showPassword ? '隐藏' : '显示'}</button>
         </div>
         <div className='flex justify-around'>
-          <button type="submit" className='parchment-button text-[32px] text-[#a2773d]' formAction={registerAction} onClick={() => {setMode("register")}}>{isPendingRegister ? "注册中..." : "注册"}</button>
+          <button type="button" className='parchment-button text-[32px] text-[#a2773d]' onClick={() => {setMode("register");if (!formRef.current) return;registerAction(new FormData(formRef.current))}}>{isPendingRegister ? "注册中..." : "注册"}</button>
           <button type="submit" className='parchment-button text-[32px]' formAction={loginAction} onClick={() => {setMode("login")}}>{isPendingLogin ? "登录中..." : "登录"}</button>
         </div>
       </div>

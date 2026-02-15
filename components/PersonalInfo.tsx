@@ -57,11 +57,11 @@ const PersonalInfo = ({ username, userNickname, userCountry, onToast } : Props) 
         <span className="parchment-label">用户名: {username}</span>
         <div className='flex'>
           <label htmlFor="nickname" className='parchment-label mt-2'>昵称: </label>
-          <input type="text" id="nickname" name="nickname" placeholder='请输入昵称' required className='input-area ml-4 w-80' onChange={(e) => {setNickname(e.target.value)}} value={nickname || ""}/>
+          <input type="text" id="nickname" name="nickname" placeholder='请输入昵称' className='input-area ml-4 w-80' onChange={(e) => {setNickname(e.target.value)}} value={nickname || ""}/>
         </div>
         <div className="flex">
           <label htmlFor="country" className="parchment-label mt-2">国家/地区: </label>
-          <select id="country" name="country" required className='input-area ml-4 w-80' onChange={(e) => {setCountry(e.target.value)}} value={country || ""}>
+          <select id="country" name="country" className='input-area ml-4 w-80' onChange={(e) => {setCountry(e.target.value)}} value={country || ""}>
             <option value="">请选择国家/地区</option>
             {COUNTRIES.map(c => (
               <option key={c.value} value={c.value}>

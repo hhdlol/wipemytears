@@ -1,3 +1,5 @@
+"use server"
+
 import { prisma } from "@/app/lib/prisma";
 import { notFound } from "next/navigation";
 import ParchmentRead from "@/components/ParchmentRead";
